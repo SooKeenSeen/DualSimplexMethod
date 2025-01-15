@@ -52,7 +52,7 @@ namespace DualSimplexMethod.ProjectUtilities
 
             return result;
         }
-        public (Dictionary<ResourceInfo, double> Solution,double Solve) PythonSolve()
+        public (Dictionary<ResourceInfo, double> Solution,double Solve) GetResult()
         {
             Dictionary<ResourceInfo, double> Solution = [];
             double solve = 0;

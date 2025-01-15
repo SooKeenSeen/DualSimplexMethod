@@ -74,7 +74,7 @@ namespace DualSimplexMethod.ProjectUtilities
                 _constraintsVectors[i].Limit = Convert.ToDouble(Console.ReadLine());
             }
         }
-        public DefaultSimplexDataProvider BuildRightProvider()
+        public DefaultSimplexDataProvider BuildDefaultProvider()
         {
             List<Constraint> lc = [];
 

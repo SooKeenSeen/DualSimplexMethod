@@ -1,6 +1,5 @@
 ﻿using DualSimplexMethod.ProjectUtilities;
 using DualSimplexMethod.SimplexLibrary;
-using Python.Runtime;
 namespace DualSimplexMethod
 {
     class Program
@@ -9,17 +8,17 @@ namespace DualSimplexMethod
         {
             const string PATH = "DishesSet.csv";
 
-            CSVUtility util = new(PATH);
-            util.ConsoleInputConstraints();
-            DualSimplex ds = new(util.BuildRightProvider());
+            CSVUtility simplexConverter = new(PATH);
+            simplexConverter.ConsoleInputConstraints();
+            DualSimplex continuousProblemCS = new(simplexConverter.BuildDefaultProvider());
 
             Console.WriteLine("Решение на C#");
-            ds.TryGetResult(out (Dictionary<ResourceInfo, double> Solution, double Solve) res);
-            util.ResultInterpritate(res,new ConsoleOutputProvider());
+            continuousProblemCS.TryGetResult(out (Dictionary<ResourceInfo, double> Solution, double Solve) resultCS);
+            simplexConverter.ResultInterpritate(resultCS, new ConsoleOutputProvider());
 
             Console.WriteLine("\nРешение на Python");
-            SimplexCSharpToPython cspt = new(util.BuildRightProvider());
-            util.ResultInterpritate(cspt.PythonSolve(),new ConsoleOutputProvider());
+            SimplexCSharpToPython continuousProblemPython = new(simplexConverter.BuildDefaultProvider());
+            simplexConverter.ResultInterpritate(continuousProblemPython.GetResult(), new ConsoleOutputProvider());
         }
     }
 }

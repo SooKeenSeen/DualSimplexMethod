@@ -9,18 +9,19 @@ namespace Branch_and_bound_Method
         static void Main()
         {
             const string PATH = "DishesSet.csv";
-            CSVToBranchAndBoundUtil util = new(PATH);
-            util.ConsoleInputConstraints();
+
+            CSVToBranchAndBoundUtil simplexConverter = new(PATH);
+            CSVUtility resultInterpreter = new(PATH);
+            simplexConverter.ConsoleInputConstraints();
 
             Console.WriteLine("\nРешение на C#");
-            BranchAndBound bb = new(util.BuildRightProvider());
-            bb.GetResult(out (Dictionary<ResourceInfo, double> Solution, double Solve) res, new NothingOutputProvider());
-            CSVUtility ut = new(PATH);
-            ut.ResultInterpritate(res, new ConsoleOutputProvider());
+            BranchAndBound integerProblemCS = new(simplexConverter.BuildDefaultProvider());
+            integerProblemCS.GetResult(out (Dictionary<ResourceInfo, double> Solution, double Solve) resultCS, new NothingOutputProvider());
+            resultInterpreter.ResultInterpritate(resultCS, new ConsoleOutputProvider());
 
             Console.WriteLine("\nРешение на Python");
-            SimplexCSharpToPython cspt = new(util.BuildRightProvider());
-            ut.ResultInterpritate(cspt.PythonSolve(), new ConsoleOutputProvider());
+            SimplexCSharpToPython integerProblemPython = new(simplexConverter.BuildDefaultProvider());
+            resultInterpreter.ResultInterpritate(integerProblemPython.GetResult(), new ConsoleOutputProvider());
         }
     }
 }
